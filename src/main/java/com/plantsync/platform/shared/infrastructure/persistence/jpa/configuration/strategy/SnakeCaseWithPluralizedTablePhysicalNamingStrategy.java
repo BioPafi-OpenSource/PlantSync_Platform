@@ -1,5 +1,5 @@
 
-package com.plantsync.platform.shared.infrastructure.jpa.configuration.strategy;
+package com.plantsync.platform.shared.infrastructure.persistence.jpa.configuration.strategy;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
