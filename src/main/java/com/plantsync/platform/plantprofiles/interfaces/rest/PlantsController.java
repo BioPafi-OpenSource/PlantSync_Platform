@@ -1,0 +1,67 @@
+package com.plantsync.platform.plantprofiles.interfaces.rest;
+
+
+import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByUserIdQuery;
+import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
+import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
+import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
+import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+@RestController
+@RequestMapping(value = "/api/v1/plants", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "Plants", description = "Plant Management Endpoints")
+public class PlantsController {
+
+    private final PlantQueryService plantQueryService;
+
+    public PlantsController(PlantQueryService plantQueryService) {
+        this.plantQueryService = plantQueryService;
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all plants")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Plants found"),
+            @ApiResponse(responseCode = "404", description = "No plants found")
+    })
+    public ResponseEntity<List<PlantResource>> getAllPlants() {
+        var plants = plantQueryService.handle(new GetAllPlantsQuery());
+
+        if (plants.isEmpty()) return ResponseEntity.notFound().build();
+
+        var resources = plants.stream()
+                .map(PlantResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+
+        return ResponseEntity.ok(resources);
+    }
+
+    @GetMapping("/userId")
+    @Operation(summary = "Get plants by user ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Plants found for the user"),
+            @ApiResponse(responseCode = "404", description = "No plants found for the user")
+    })
+    public ResponseEntity<List<PlantResource>> getAllPlantsByUserId( @RequestParam Long userId) {
+        var plants = plantQueryService.handle(new GetAllPlantsByUserIdQuery(userId));
+
+        if (plants.isEmpty()) return ResponseEntity.notFound().build();
+
+        var resources = plants.stream()
+                .map(PlantResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+
+        return ResponseEntity.ok(resources);
+    }
+}
