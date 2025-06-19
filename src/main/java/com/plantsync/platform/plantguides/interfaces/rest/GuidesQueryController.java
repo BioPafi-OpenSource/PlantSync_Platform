@@ -21,11 +21,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/v1/guides", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Guides", description = "Guide Endpoints")
-public class GuidesController {
+public class GuidesQueryController {
 
     private final GuideQueryService guideQueryService;
 
-    public GuidesController(GuideQueryService guideQueryService) {
+    public GuidesQueryController(GuideQueryService guideQueryService) {
         this.guideQueryService = guideQueryService;
     }
 

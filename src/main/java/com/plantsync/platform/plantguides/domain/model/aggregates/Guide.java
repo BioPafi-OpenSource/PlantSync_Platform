@@ -1,5 +1,6 @@
 package com.plantsync.platform.plantguides.domain.model.aggregates;
 
+import com.plantsync.platform.plantguides.domain.model.commands.CreateGuideCommand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -47,5 +48,14 @@ public class Guide extends AuditableAbstractAggregateRoot<Guide> {
         this.topic = topic;
         this.type = type;
         this.imageUrl = imageUrl;
+    }
+
+    public Guide(CreateGuideCommand command) {
+        this.title = command.title();
+        this.name = command.name();
+        this.description = command.description();
+        this.topic = command.topic();
+        this.type = command.type();
+        this.imageUrl = command.imageUrl();
     }
 }

@@ -3,6 +3,7 @@ package com.plantsync.platform.plantprofiles.interfaces.rest;
 
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByUserIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
+import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
 import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
@@ -21,11 +22,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/v1/plants", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Plants", description = "Plant Management Endpoints")
-public class PlantsController {
+public class PlantsQueryController {
 
     private final PlantQueryService plantQueryService;
 
-    public PlantsController(PlantQueryService plantQueryService) {
+    public PlantsQueryController(PlantQueryService plantQueryService) {
         this.plantQueryService = plantQueryService;
     }
 
@@ -64,4 +65,30 @@ public class PlantsController {
 
         return ResponseEntity.ok(resources);
     }
+
+    @GetMapping("/plantId")
+    @Operation(summary = "Get plant by ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Plant found for the user"),
+            @ApiResponse(responseCode = "404", description = "No plant found for the user")
+    })
+    public ResponseEntity<PlantResource> getPlantByUserId( @RequestParam Long plantId) {
+
+        var getPlantByIdQuery = new GetPlantByIdQuery(plantId);
+        var plant = plantQueryService.handle(getPlantByIdQuery);
+        if (plant.isEmpty()) return ResponseEntity.notFound().build();
+        var plantEntity = plant.get();
+        var plantResource = PlantResourceFromEntityAssembler.toResourceFromEntity(plantEntity);
+        return ResponseEntity.ok(plantResource);
+
+
+
+    }
+
+
+
+
+
+
+
 }

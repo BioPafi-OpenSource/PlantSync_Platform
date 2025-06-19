@@ -10,4 +10,5 @@ public interface PlantRepository extends JpaRepository<Plant,Long> {
 
     List<Plant> findByUserId(Long userId);
 
+
 }
