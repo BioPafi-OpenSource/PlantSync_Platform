@@ -51,7 +51,7 @@ public class GuidesController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Guide found"),
             @ApiResponse(responseCode = "404", description = "Guide not found")})
-    public ResponseEntity<GuideResource> getCourseById(@PathVariable Long guideId) {
+    public ResponseEntity<GuideResource> getGuideById(@PathVariable Long guideId) {
         var getGuideByIdQuery = new GetGuideByIdQuery(guideId);
         var guide = guideQueryService.handle(getGuideByIdQuery);
         if (guide.isEmpty()) return ResponseEntity.notFound().build();
