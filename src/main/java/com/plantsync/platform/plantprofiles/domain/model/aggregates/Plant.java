@@ -1,5 +1,7 @@
 package com.plantsync.platform.plantprofiles.domain.model.aggregates;
 
+import com.plantsync.platform.plantguides.domain.model.commands.CreateGuideCommand;
+import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
 import com.plantsync.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
@@ -38,7 +40,18 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
 
     }
 
+    public Plant(CreatePlantCommand command) {
+       this.name = new PlantName(command.name());
+       this.species = command.species();
+       this.acquisitionDate = LocalDate.parse(command.acquisitionDate());
+       this.humidity = HumidityLevel.valueOf(command.humidity().toUpperCase());
+       this.nextWateringDate = LocalDate.parse(command.nextWateringDate());
+        this.imageUrl = command.imageUrl();
+        this.notificationsEnabled = command.notificationsEnabled();
+        this.userId = command.userId();
 
+
+    }
 
 
 }

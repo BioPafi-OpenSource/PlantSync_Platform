@@ -1,22 +1,31 @@
 package com.plantsync.platform.plantprofiles.domain.model.commands;
 
-
 public record CreatePlantCommand (
 
-        String title,
-        String name,
-        String description,
-        String topic,
-        String type,
-        String imageUrl
+         String name,
+
+         String species,
+
+         String acquisitionDate,
+
+         String humidity,
+
+        String nextWateringDate,
+
+        String imageUrl,
+
+        Boolean notificationsEnabled,
+
+        Long userId
+
 
 ) {
 
     public CreatePlantCommand {
-        if (title == null || title.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("title cannot be null or blank");
         }
-        if (description == null || description.isBlank()) {
+        if (species == null || species.isBlank()) {
             throw new IllegalArgumentException("description cannot be null or blank");
         }
     }
