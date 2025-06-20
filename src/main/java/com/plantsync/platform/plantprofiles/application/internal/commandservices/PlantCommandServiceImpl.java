@@ -1,12 +1,17 @@
 package com.plantsync.platform.plantprofiles.application.internal.commandservices;
 
-import com.plantsync.platform.plantguides.domain.model.aggregates.Guide;
 import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
+import com.plantsync.platform.plantprofiles.domain.model.commands.UpdatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.services.PlantCommandService;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
 import com.plantsync.platform.plantprofiles.infrastructure.persistence.jpa.repositories.PlantRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class PlantCommandServiceImpl implements PlantCommandService {
@@ -45,6 +50,35 @@ public class PlantCommandServiceImpl implements PlantCommandService {
         }
     }
 
+
+
+
+    @Override
+    public Optional<Plant> handle(UpdatePlantCommand command) {
+        var result = plantRepository.findById(command.plantId());
+        if (result.isEmpty())
+            throw new IllegalArgumentException("Plant with id %s not found".formatted(command.plantId()));
+
+        var plantToUpdate = result.get();
+
+        try {
+            var updatedPlant = plantRepository.save(
+                    plantToUpdate.updateInformation(
+                            command.name(),
+                            command.species(),
+                            command.acquisitionDate(),
+                            command.humidity(),
+                            command.nextWateringDate(),
+                            command.imageUrl(),
+                            command.notificationsEnabled(),
+                            command.userId()
+                    )
+            );
+            return Optional.of(updatedPlant);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating plant: %s".formatted(e.getMessage()));
+        }
+    }
 
 
 

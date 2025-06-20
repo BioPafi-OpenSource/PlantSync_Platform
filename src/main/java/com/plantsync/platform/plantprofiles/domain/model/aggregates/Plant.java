@@ -9,6 +9,7 @@ import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLe
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -53,5 +54,29 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
 
     }
 
+
+    public Plant updateInformation(PlantName name,
+                                   String species,
+                                   LocalDate acquisitionDate,
+                                   HumidityLevel humidity,
+                                   LocalDate nextWateringDate,
+                                   String imageUrl,
+                                   Boolean notificationsEnabled,
+                                   Long userId
+
+                                   ) {
+
+        this.name = name;
+        this.species = species;
+        this.acquisitionDate = acquisitionDate;
+        this.humidity = humidity;
+        this.nextWateringDate = nextWateringDate;
+        this.imageUrl = imageUrl;
+        this.notificationsEnabled = notificationsEnabled;
+        this.userId = userId;
+
+
+        return this;
+    }
 
 }

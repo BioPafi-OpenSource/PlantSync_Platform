@@ -7,8 +7,10 @@ import com.plantsync.platform.plantprofiles.domain.model.services.PlantCommandSe
 import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.CreatePlantCommandFromResourceAssembler;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
+import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.UpdatePlantCommandFromResourceAssembler;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.CreatePlantResource;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
+import com.plantsync.platform.plantprofiles.interfaces.rest.resources.UpdatePlantResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -69,6 +71,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             plantCommandService.handle(deletePlantCommand);
             return ResponseEntity.ok("Plant with id successfully deleted");
         }
+
+
+        @PutMapping("/{plantId}")
+        @Operation(summary = "Update a plant")
+        public ResponseEntity<PlantResource> updatePlant(@PathVariable Long plantId, @RequestBody UpdatePlantResource resource) {
+            var command = UpdatePlantCommandFromResourceAssembler.toCommandFromResource(plantId, resource);
+            var updated = plantCommandService.handle(command);
+
+            if (updated.isEmpty()) return ResponseEntity.notFound().build();
+
+            var resourceResponse = PlantResourceFromEntityAssembler.toResourceFromEntity(updated.get());
+            return ResponseEntity.ok(resourceResponse);
+        }
+
 
 
     }

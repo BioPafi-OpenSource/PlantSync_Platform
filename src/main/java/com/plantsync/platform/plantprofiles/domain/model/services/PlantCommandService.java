@@ -1,7 +1,11 @@
 package com.plantsync.platform.plantprofiles.domain.model.services;
 
+import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
+import com.plantsync.platform.plantprofiles.domain.model.commands.UpdatePlantCommand;
+
+import java.util.Optional;
 
 public interface PlantCommandService {
 
@@ -12,6 +16,7 @@ public interface PlantCommandService {
 
         void handle(DeletePlantCommand command);
 
+        Optional<Plant> handle(UpdatePlantCommand command);
 
 
 }
