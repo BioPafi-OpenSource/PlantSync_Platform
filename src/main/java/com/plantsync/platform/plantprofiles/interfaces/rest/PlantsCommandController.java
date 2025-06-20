@@ -1,5 +1,6 @@
 package com.plantsync.platform.plantprofiles.interfaces.rest;
 
+import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 
 import com.plantsync.platform.plantprofiles.domain.model.services.PlantCommandService;
@@ -15,10 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -56,6 +54,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             var plantEntity = plant.get();
             var plantResource = PlantResourceFromEntityAssembler.toResourceFromEntity(plantEntity);
             return new ResponseEntity<>(plantResource, HttpStatus.CREATED);
+        }
+
+
+
+
+        @DeleteMapping("/{plantId}")
+        @Operation(summary = "Delete plant", description = "Delete plant with a given ID")
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Plant deleted"),
+                @ApiResponse(responseCode = "404", description = "Plant not found")})
+        public ResponseEntity<?> deletePlant(@PathVariable Long plantId) {
+            var deletePlantCommand = new DeletePlantCommand(plantId);
+            plantCommandService.handle(deletePlantCommand);
+            return ResponseEntity.ok("Plant with id successfully deleted");
         }
 
 

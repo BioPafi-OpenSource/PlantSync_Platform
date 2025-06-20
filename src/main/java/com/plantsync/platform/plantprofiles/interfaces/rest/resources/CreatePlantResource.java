@@ -3,7 +3,7 @@ package com.plantsync.platform.plantprofiles.interfaces.rest.resources;
 public record CreatePlantResource(
 
 
-    String title,
+
     String name,
     String species,
     String acquisitionDate,
