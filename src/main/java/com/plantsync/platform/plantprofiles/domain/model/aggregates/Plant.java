@@ -42,14 +42,14 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
     }
 
     public Plant(CreatePlantCommand command) {
-       this.name = new PlantName(command.name());
+       this.name = command.name();
        this.species = command.species();
-       this.acquisitionDate = LocalDate.parse(command.acquisitionDate());
-       this.humidity = HumidityLevel.valueOf(command.humidity().toUpperCase());
-       this.nextWateringDate = LocalDate.parse(command.nextWateringDate());
+       this.acquisitionDate = command.acquisitionDate();
+       this.humidity = command.humidity();
+       this.nextWateringDate = command.nextWateringDate();
         this.imageUrl = command.imageUrl();
         this.notificationsEnabled = command.notificationsEnabled();
-        this.profileId = new ProfileId(command.profileId());
+        this.profileId = command.profileId();
 
 
     }

@@ -1,32 +1,33 @@
 package com.plantsync.platform.plantprofiles.domain.model.commands;
 
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.ProfileId;
+
+import java.time.LocalDate;
+
 public record CreatePlantCommand (
 
-         String name,
+         PlantName name,
 
          String species,
 
-         String acquisitionDate,
+         LocalDate acquisitionDate,
 
-         String humidity,
+         HumidityLevel humidity,
 
-        String nextWateringDate,
+        LocalDate nextWateringDate,
 
         String imageUrl,
 
         Boolean notificationsEnabled,
 
-        Long profileId
+        ProfileId profileId
 
 
 ) {
 
     public CreatePlantCommand {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("title cannot be null or blank");
-        }
-        if (species == null || species.isBlank()) {
-            throw new IllegalArgumentException("description cannot be null or blank");
-        }
+
     }
 }
