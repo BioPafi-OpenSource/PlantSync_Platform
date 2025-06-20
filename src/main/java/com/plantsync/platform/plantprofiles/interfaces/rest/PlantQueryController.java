@@ -22,11 +22,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/v1/plants", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Plants", description = "Plant Management Endpoints")
-public class PlantsQueryController {
+public class PlantQueryController {
 
     private final PlantQueryService plantQueryService;
 
-    public PlantsQueryController(PlantQueryService plantQueryService) {
+    public PlantQueryController(PlantQueryService plantQueryService) {
         this.plantQueryService = plantQueryService;
     }
 

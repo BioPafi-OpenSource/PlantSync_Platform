@@ -1,14 +1,14 @@
 package com.plantsync.platform.tasks.domain.model.services;
 
-import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
-import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
+import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
+import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;
 
 public interface TaskCommandService {
 
 
-    Long handle(CreatePlantCommand command);
+    Long handle(CreateTaskCommand command);
 
-    void handle(DeletePlantCommand command);
+    void handle(DeleteTaskCommand command);
 
 }
 
