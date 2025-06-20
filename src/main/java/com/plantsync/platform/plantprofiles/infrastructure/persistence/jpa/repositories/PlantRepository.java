@@ -8,7 +8,7 @@ import java.util.List;
 public interface PlantRepository extends JpaRepository<Plant,Long> {
 
 
-    List<Plant> findByUserId(Long userId);
+    List<Plant> findByProfileId(Long profileId);
 
 
 }

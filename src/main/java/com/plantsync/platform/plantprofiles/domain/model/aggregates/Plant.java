@@ -1,7 +1,7 @@
 package com.plantsync.platform.plantprofiles.domain.model.aggregates;
 
-import com.plantsync.platform.plantguides.domain.model.commands.CreateGuideCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.ProfileId;
 import com.plantsync.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
@@ -9,7 +9,6 @@ import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLe
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 public class Plant extends AuditableAbstractAggregateRoot<Plant> {
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "name"))
+    @AttributeOverride(name = "value", column = @Column(name = "plant_name"))
     private PlantName name;
 
     private String species;
@@ -35,7 +34,8 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
 
     private Boolean notificationsEnabled;
 
-    private Long userId;
+    @Embedded
+    private ProfileId profileId;
 
     public Plant(){
 
@@ -49,7 +49,7 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
        this.nextWateringDate = LocalDate.parse(command.nextWateringDate());
         this.imageUrl = command.imageUrl();
         this.notificationsEnabled = command.notificationsEnabled();
-        this.userId = command.userId();
+        this.profileId = new ProfileId(command.profileId());
 
 
     }
@@ -62,7 +62,7 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
                                    LocalDate nextWateringDate,
                                    String imageUrl,
                                    Boolean notificationsEnabled,
-                                   Long userId
+                                   ProfileId profileId
 
                                    ) {
 
@@ -73,7 +73,7 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
         this.nextWateringDate = nextWateringDate;
         this.imageUrl = imageUrl;
         this.notificationsEnabled = notificationsEnabled;
-        this.userId = userId;
+        this.profileId = profileId;
 
 
         return this;

@@ -16,7 +16,7 @@ public record CreatePlantCommand (
 
         Boolean notificationsEnabled,
 
-        Long userId
+        Long profileId
 
 
 ) {
