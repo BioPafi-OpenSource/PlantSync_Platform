@@ -1,6 +1,7 @@
 package com.plantsync.platform.plantprofiles.application.internal.queryservices;
 
 
+import com.plantsync.platform.plantprofiles.domain.exceptions.PlantNotFoundException;
 import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByProfileIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
@@ -34,6 +35,7 @@ public class PlantQueryServiceImpl implements PlantQueryService {
 
     @Override
     public Optional<Plant> handle(GetPlantByIdQuery query) {
+        if (!plantRepository.existsById(query.plantId())) throw new PlantNotFoundException(query.plantId());
         return plantRepository.findById(query.plantId());
     }
 
