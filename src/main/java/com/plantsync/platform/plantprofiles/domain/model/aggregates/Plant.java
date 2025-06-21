@@ -35,6 +35,7 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
     private Boolean notificationsEnabled;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "profile_id"))
     private ProfileId profileId;
 
     public Plant(){
