@@ -9,7 +9,7 @@ public class ProfileResourceFromEntityAssembler {
         return new ProfileResource(
                 entity.getId(),
                entity.getPersonName().toString(),
-                entity.getSubscriptionPlan().toString(),
+                entity.getSubscriptionPlan().name(),
                 entity.getUserId().value());
     }
 }

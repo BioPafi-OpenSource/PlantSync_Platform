@@ -11,7 +11,7 @@ public static PlantHistoryResource toResourceFromEntity(PlantHistory entity){
 
     return new PlantHistoryResource(
             entity.getId(),
-            entity.getPlant().getId(),
+            entity.getPlantId().value(),
             entity.getType(),
             entity.getDate().toString(),
             entity.getTime().toString(),

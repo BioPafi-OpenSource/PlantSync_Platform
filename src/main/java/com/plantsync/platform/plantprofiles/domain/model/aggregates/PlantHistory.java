@@ -1,9 +1,10 @@
 package com.plantsync.platform.plantprofiles.domain.model.aggregates;
 
+import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
+import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantHistoryCommand;
 import com.plantsync.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantId;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +16,11 @@ import java.time.LocalTime;
 @Entity
 public class PlantHistory extends AuditableAbstractAggregateRoot<PlantHistory> {
 
-    @ManyToOne
-    @JoinColumn(name = "plant_id")
-    private Plant plant;
+
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "plant_id"))
+    private PlantId plantId;
+
 
     private String type;
     private LocalDate date;
@@ -25,6 +28,16 @@ public class PlantHistory extends AuditableAbstractAggregateRoot<PlantHistory> {
     private Integer humidity;
 
     public PlantHistory(){
+        super();
+    }
+    public PlantHistory(CreatePlantHistoryCommand command) {
+        this.plantId = command.plantId();
+        this.type = command.type();
+        this.date = command.date();
+        this.time = command.time();
+        this.humidity = command.humidity();
+
 
     }
+
 }
