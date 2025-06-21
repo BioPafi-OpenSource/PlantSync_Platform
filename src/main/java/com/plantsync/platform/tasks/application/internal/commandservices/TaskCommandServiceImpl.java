@@ -1,0 +1,48 @@
+package com.plantsync.platform.tasks.application.internal.commandservices;
+
+
+
+import com.plantsync.platform.tasks.domain.model.aggregates.Task;
+import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
+import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;
+import com.plantsync.platform.tasks.domain.model.services.TaskCommandService;
+import com.plantsync.platform.tasks.infrastructure.persistence.jpa.repositories.TaskRepository;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TaskCommandServiceImpl implements TaskCommandService {
+
+    private final TaskRepository taskRepository;
+
+    public TaskCommandServiceImpl(TaskRepository taskRepository) {
+
+        this.taskRepository = taskRepository;
+    }
+
+
+    @Override
+    public Long handle(CreateTaskCommand command) {
+        var task = new Task(command);
+        try {
+            taskRepository.save(task);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving task: %s".formatted(e.getMessage()));
+        }
+        return task.getId();
+
+
+    }
+
+
+    @Override
+    public void handle(DeleteTaskCommand command) {
+        if (!taskRepository.existsById(command.taskId())) {
+            throw new IllegalArgumentException("Task with id %s not found".formatted(command.taskId()));
+        }
+        try {
+            taskRepository.deleteById(command.taskId());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while deleting task: %s".formatted(e.getMessage()));
+        }
+    }
+}

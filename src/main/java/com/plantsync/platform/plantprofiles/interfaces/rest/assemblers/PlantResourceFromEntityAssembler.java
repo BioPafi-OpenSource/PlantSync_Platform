@@ -16,7 +16,7 @@ public static PlantResource toResourceFromEntity(Plant entity){
          entity.getNextWateringDate().toString(),
          entity.getImageUrl(),
          entity.getNotificationsEnabled(),
-         entity.getUserId()
+         entity.getProfileId().value()
  );
 }
 

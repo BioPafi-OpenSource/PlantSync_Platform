@@ -11,7 +11,7 @@ public record CreatePlantResource(
     String nextWateringDate,
     String imageUrl,
     Boolean notificationsEnabled,
-    Long userId
+    Long profileId
 
 ) {
 

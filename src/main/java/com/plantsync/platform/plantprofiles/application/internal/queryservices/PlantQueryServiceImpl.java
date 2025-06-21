@@ -2,7 +2,7 @@ package com.plantsync.platform.plantprofiles.application.internal.queryservices;
 
 
 import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
-import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByUserIdQuery;
+import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByProfileIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 import com.plantsync.platform.plantprofiles.domain.services.PlantQueryService;
@@ -28,8 +28,8 @@ public class PlantQueryServiceImpl implements PlantQueryService {
     }
 
     @Override
-    public List<Plant> handle(GetAllPlantsByUserIdQuery query) {
-        return plantRepository.findByUserId(query.userId());
+    public List<Plant> handle(GetAllPlantsByProfileIdQuery query) {
+        return plantRepository.findByProfileId(query.profileId());
     }
 
     @Override

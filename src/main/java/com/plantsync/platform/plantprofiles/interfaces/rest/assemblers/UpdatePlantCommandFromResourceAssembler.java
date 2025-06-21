@@ -3,6 +3,7 @@ package com.plantsync.platform.plantprofiles.interfaces.rest.assemblers;
 import com.plantsync.platform.plantprofiles.domain.model.commands.UpdatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
 import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.ProfileId;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.UpdatePlantResource;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class UpdatePlantCommandFromResourceAssembler {
                 LocalDate.parse(resource.nextWateringDate()),
                 resource.imageUrl(),
                 resource.notificationsEnabled(),
-                resource.userId()
+                new ProfileId(resource.profileId())
 
 
         );

@@ -1,7 +1,7 @@
 package com.plantsync.platform.plantprofiles.interfaces.rest;
 
 
-import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByUserIdQuery;
+import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByProfileIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
@@ -22,11 +22,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/v1/plants", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Plants", description = "Plant Management Endpoints")
-public class PlantsQueryController {
+public class PlantQueryController {
 
     private final PlantQueryService plantQueryService;
 
-    public PlantsQueryController(PlantQueryService plantQueryService) {
+    public PlantQueryController(PlantQueryService plantQueryService) {
         this.plantQueryService = plantQueryService;
     }
 
@@ -48,14 +48,14 @@ public class PlantsQueryController {
         return ResponseEntity.ok(resources);
     }
 
-    @GetMapping("/userId")
-    @Operation(summary = "Get plants by user ID")
+    @GetMapping("/profileId")
+    @Operation(summary = "Get plants by profile ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Plants found for the user"),
             @ApiResponse(responseCode = "404", description = "No plants found for the user")
     })
-    public ResponseEntity<List<PlantResource>> getAllPlantsByUserId( @RequestParam Long userId) {
-        var plants = plantQueryService.handle(new GetAllPlantsByUserIdQuery(userId));
+    public ResponseEntity<List<PlantResource>> getAllPlantsByProfileId(@RequestParam Long profileId) {
+        var plants = plantQueryService.handle(new GetAllPlantsByProfileIdQuery(profileId));
 
         if (plants.isEmpty()) return ResponseEntity.notFound().build();
 
