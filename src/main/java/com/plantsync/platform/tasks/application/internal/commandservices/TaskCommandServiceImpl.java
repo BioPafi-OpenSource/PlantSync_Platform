@@ -36,9 +36,7 @@ public class TaskCommandServiceImpl implements TaskCommandService {
 
     @Override
     public void handle(DeleteTaskCommand command) {
-        if (!taskRepository.existsById(command.taskId())) {
-            throw new IllegalArgumentException("Task with id %s not found".formatted(command.taskId()));
-        }
+
         try {
             taskRepository.deleteById(command.taskId());
         } catch (Exception e) {

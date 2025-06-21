@@ -18,7 +18,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     @Embedded
     private PersonName personName;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private SubscriptionPlan subscriptionPlan;
 
     @Embedded
@@ -26,7 +26,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     private UserId userId;
 
     public Profile() {
-
+    super();
     }
 
 
@@ -35,6 +35,11 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.personName = command.personName();
         this.subscriptionPlan = command.subscriptionPlan();
         this.userId = command.userId();
+    }
+    public Profile(PersonName name, SubscriptionPlan subscriptionPlan, UserId userId) {
+        this.personName = name;
+        this.subscriptionPlan = subscriptionPlan;
+        this.userId = userId;
     }
 
 

@@ -56,7 +56,7 @@ public class UsersCommandController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created successfully."),
             @ApiResponse(responseCode = "400", description = "Bad request.")})
-    public ResponseEntity<UserResource> signUp(@org.springframework.web.bind.annotation.RequestBody SignUpResource signUpResource) {
+    public ResponseEntity<UserResource> create(@org.springframework.web.bind.annotation.RequestBody SignUpResource signUpResource) {
         var signUpCommand = SignUpCommandFromResourceAssembler.toCommandFromResource(signUpResource);
         var user = userCommandService.handle(signUpCommand);
         if (user.isEmpty()) {

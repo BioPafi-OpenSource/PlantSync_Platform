@@ -8,7 +8,7 @@ public class ProfileResourceFromEntityAssembler {
     public static ProfileResource toResourceFromEntity(Profile entity) {
         return new ProfileResource(
                 entity.getId(),
-               entity.getPersonName().toString(),
+               entity.getPersonName().name(),
                 entity.getSubscriptionPlan().name(),
                 entity.getUserId().value());
     }

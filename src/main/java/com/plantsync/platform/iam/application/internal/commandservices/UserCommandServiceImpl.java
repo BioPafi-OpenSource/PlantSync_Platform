@@ -5,6 +5,11 @@ import com.plantsync.platform.iam.domain.model.commands.SignInCommand;
 import com.plantsync.platform.iam.domain.model.commands.SignUpCommand;
 import com.plantsync.platform.iam.domain.services.UserCommandService;
 import com.plantsync.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
+import com.plantsync.platform.profiles.domain.model.aggregates.Profile;
+import com.plantsync.platform.profiles.domain.model.valueobjects.PersonName;
+import com.plantsync.platform.profiles.domain.model.valueobjects.SubscriptionPlan;
+import com.plantsync.platform.profiles.domain.model.valueobjects.UserId;
+import com.plantsync.platform.profiles.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,9 +17,12 @@ import java.util.Optional;
 public class UserCommandServiceImpl implements UserCommandService {
 
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
 
-    public UserCommandServiceImpl(UserRepository userRepository) {
+    public UserCommandServiceImpl(UserRepository userRepository,
+                                  ProfileRepository profileRepository) {
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
     }
 
     @Override
@@ -33,6 +41,15 @@ public class UserCommandServiceImpl implements UserCommandService {
 
         var user = new User(command.email(), command.password());
         userRepository.save(user);
+
+        var profile = new Profile(
+                new PersonName(command.name()),
+                SubscriptionPlan.valueOf(command.subscriptionPlan().toUpperCase()),
+                new UserId(user.getId())
+        );
+        profileRepository.save(profile);
+
+
 
         return Optional.of(user);
     }
