@@ -6,6 +6,8 @@ import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
 import com.plantsync.platform.tasks.domain.model.valueobjects.PlantId;
 
 import com.plantsync.platform.tasks.domain.model.valueobjects.ProfileId;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
@@ -30,21 +32,22 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     private Boolean completed;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "plant_id"))
     private PlantId plantId;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "profile_id"))
     private ProfileId profileId;
 
     public Task() {}
 
 
     public Task(CreateTaskCommand command) {
-        
+        this.date = command.date();
     this.action = command.action();
-    this.date = command.date();
+        this.completed = command.completed();
     this.plantId = command.plantId();
     this.profileId = command.profileId();
-    this.completed = command.completed();
 
     }
 
