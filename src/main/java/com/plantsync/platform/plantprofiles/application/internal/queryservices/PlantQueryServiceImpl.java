@@ -5,7 +5,7 @@ import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByProfileIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
-import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
+import com.plantsync.platform.plantprofiles.domain.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.infrastructure.persistence.jpa.repositories.PlantRepository;
 import org.springframework.stereotype.Service;
 

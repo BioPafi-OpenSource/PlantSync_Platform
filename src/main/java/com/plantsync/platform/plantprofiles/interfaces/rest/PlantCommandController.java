@@ -3,8 +3,8 @@ package com.plantsync.platform.plantprofiles.interfaces.rest;
 import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 
-import com.plantsync.platform.plantprofiles.domain.model.services.PlantCommandService;
-import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
+import com.plantsync.platform.plantprofiles.domain.services.PlantCommandService;
+import com.plantsync.platform.plantprofiles.domain.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.CreatePlantCommandFromResourceAssembler;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.UpdatePlantCommandFromResourceAssembler;

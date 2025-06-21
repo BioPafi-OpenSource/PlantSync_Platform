@@ -1,4 +1,4 @@
-package com.plantsync.platform.plantprofiles.domain.model.services;
+package com.plantsync.platform.plantprofiles.domain.services;
 
 
 import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;

@@ -4,13 +4,10 @@ import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.UpdatePlantCommand;
-import com.plantsync.platform.plantprofiles.domain.model.services.PlantCommandService;
-import com.plantsync.platform.plantprofiles.domain.model.valueobjects.HumidityLevel;
-import com.plantsync.platform.plantprofiles.domain.model.valueobjects.PlantName;
+import com.plantsync.platform.plantprofiles.domain.services.PlantCommandService;
 import com.plantsync.platform.plantprofiles.infrastructure.persistence.jpa.repositories.PlantRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service

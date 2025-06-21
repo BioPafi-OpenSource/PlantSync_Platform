@@ -5,7 +5,7 @@ import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByP
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
-import com.plantsync.platform.plantprofiles.domain.model.services.PlantQueryService;
+import com.plantsync.platform.plantprofiles.domain.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
