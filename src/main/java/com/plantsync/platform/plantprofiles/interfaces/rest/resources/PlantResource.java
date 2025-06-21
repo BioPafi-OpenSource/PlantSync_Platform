@@ -9,7 +9,7 @@ public record PlantResource(
         String nextWateringDate,
         String imageUrl,
         Boolean notificationsEnabled,
-        Long userId
+        Long profileId
 
 ) {
 }

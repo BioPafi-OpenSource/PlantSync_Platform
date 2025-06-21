@@ -71,7 +71,7 @@ public class PlantCommandServiceImpl implements PlantCommandService {
                             command.nextWateringDate(),
                             command.imageUrl(),
                             command.notificationsEnabled(),
-                            command.userId()
+                            command.profileId()
                     )
             );
             return Optional.of(updatedPlant);
