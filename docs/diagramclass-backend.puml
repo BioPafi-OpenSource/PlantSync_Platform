@@ -1,0 +1,200 @@
+﻿diagram.puml@startuml
+            title DDD Bounded Context Diagram - Platsync Backend
+
+            left to right direction
+
+            ' ---- PROFILES ----
+            rectangle "profiles (Bounded Context)" as profiles {
+              package "interfaces.rest.resources" {
+                class ProfileResource
+              }
+              package "interfaces.rest.transform" {
+                class ProfileTransformer
+
+              }
+              package "interfaces"{
+              class ProfileController
+              }
+
+
+              package "application.internal.queryservices" {
+                class ProfileQueryServiceImpl
+              }
+              package "application.internal.commandservices" {
+                class ProfileCommandServiceImpl
+              }
+
+              package "domain.services" {
+                class ProfileQueryService
+                class ProfileCommandService
+              }
+
+              package "domain.model.aggregates" {
+                class Profile
+              }
+
+              package "domain.model.queries" {}
+              package "domain.model.commands" {}
+              package "domain.model.valueobjects" {}
+              package "infrastructure.persistence.jpa" {}
+
+              ' Relaciones internas
+              ProfileController --> ProfileTransformer
+              ProfileController --> ProfileQueryServiceImpl
+              ProfileController --> ProfileCommandServiceImpl
+              ProfileQueryServiceImpl --> ProfileQueryService
+              ProfileCommandServiceImpl --> ProfileCommandService
+              ProfileCommandService --> Profile
+              ProfileQueryService --> Profile
+            }
+
+            ' ---- TASKS ----
+            rectangle "tasks (Bounded Context)" as tasks {
+              package "interfaces.rest.resources" {
+                class TaskResource
+              }
+              package "interfaces.rest.assemblers" {
+                class TaskAssembler
+              }
+              package "interfaces"{
+              class TaskController
+              }
+
+              package "application.internal.queryservices" {
+                class TaskQueryServiceImpl
+              }
+              package "application.internal.commandservices" {
+                class TaskCommandServiceImpl
+              }
+
+              package "domain.services" {
+                class TaskQueryService
+                class TaskCommandService
+              }
+
+              package "domain.model.aggregates" {
+                class Task
+              }
+
+              package "domain.model.queries" {}
+              package "domain.model.commands" {}
+              package "domain.model.valueobjects" {}
+              package "infrastructure.persistence.jpa" {}
+
+              ' Relaciones internas
+              TaskController --> TaskAssembler
+              TaskController --> TaskQueryServiceImpl
+              TaskController --> TaskCommandServiceImpl
+              TaskQueryServiceImpl --> TaskQueryService
+              TaskCommandServiceImpl --> TaskCommandService
+              TaskQueryService --> Task
+              TaskCommandService --> Task
+            }
+
+            ' ---- GUIDES ----
+            rectangle "guides (Bounded Context)" as guides {
+              package "interfaces.rest.resources" {
+                class GuideResource
+              }
+              package "interfaces.rest.assemblers" {
+                class GuideAssembler
+              }
+              package "interfaces"{
+              class GuideController
+              }
+
+              package "application.internal.queryservices" {
+                class GuideQueryServiceImpl
+              }
+              package "application.internal.commandservices" {
+                class GuideCommandServiceImpl
+              }
+
+              package "domain.services" {
+                class GuideQueryService
+                class GuideCommandService
+              }
+
+              package "domain.model.aggregates" {
+                class Guide
+              }
+
+              package "domain.model.queries" {}
+              package "domain.model.commands" {}
+              package "infrastructure.persistence.jpa" {}
+
+              ' Relaciones internas
+              GuideController --> GuideAssembler
+              GuideController --> GuideQueryServiceImpl
+              GuideController --> GuideCommandServiceImpl
+              GuideQueryServiceImpl --> GuideQueryService
+              GuideCommandServiceImpl --> GuideCommandService
+              GuideQueryService --> Guide
+              GuideCommandService --> Guide
+            }
+
+            ' ---- PLANT PROFILES ----
+            rectangle "plantprofiles (Bounded Context)" as plantprofiles {
+              package "interfaces.rest.resources" {
+                class PlantResource
+                class PlantHistoryResource
+              }
+              package "interfaces.rest.assemblers" {
+                class PlantResourceAssembler
+              }
+              package "interfaces"{
+              class PlantController
+              }
+
+              package "application.internal.queryservices" {
+                class PlantQueryServiceImpl
+              }
+              package "application.internal.commandservices" {
+                class PlantCommandServiceImpl
+              }
+
+              package "domain.services" {
+                class PlantCommandService
+                class PlantQueryService
+                class PlantDomainService
+              }
+
+              package "domain.model.aggregates" {
+                class Plant
+                class PlantHistory
+              }
+
+              package "domain.model.commands" {}
+              package "domain.model.queries" {}
+              package "domain.model.exceptions" {}
+              package "infrastructure.persistence.jpa" {}
+
+              ' Relaciones internas
+              PlantCommandService --> Plant
+              PlantCommandService --> PlantHistory
+              PlantQueryService --> Plant
+              PlantController --> PlantResourceAssembler
+              PlantController --> PlantQueryServiceImpl
+              PlantController --> PlantCommandServiceImpl
+            }
+
+            ' ---- SHARED ----
+            rectangle "shared (Bounded Context)" as shared {
+              package "interfaces.rest.resources" {
+                class CommonResource
+              }
+              package "domain.model.entities" {
+                class BaseEntity
+              }
+              package "domain.model.aggregates" {}
+              package "infrastructure.flyway" {}
+              package "infrastructure.persistence.jpa" {}
+            }
+
+            ' ---- Conexiones hacia SHARED ----
+            profiles ..> shared : uses
+            tasks ..> shared : uses
+            guides ..> shared : uses
+            plantprofiles ..> shared : uses
+
+            @enduml
