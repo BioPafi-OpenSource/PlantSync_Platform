@@ -7,16 +7,18 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-/**
- * @author Renzo Rivera U20231D974
- */
 
 @Configuration
 public class FlywayConfiguration {
 
     @Autowired
     public FlywayConfiguration(DataSource dataSource) {
-        Flyway.configure().baselineOnMigrate(true).dataSource(dataSource).load().migrate();
+        Flyway flyway = Flyway.configure()
+                .baselineOnMigrate(true)
+                .dataSource(dataSource)
+                .load();
+
+        flyway.repair();
+        flyway.migrate();
     }
 }
-

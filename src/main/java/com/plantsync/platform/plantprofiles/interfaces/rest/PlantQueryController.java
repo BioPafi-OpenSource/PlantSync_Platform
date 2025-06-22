@@ -4,6 +4,7 @@ package com.plantsync.platform.plantprofiles.interfaces.rest;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsByProfileIdQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetAllPlantsQuery;
 import com.plantsync.platform.plantprofiles.domain.model.queries.GetPlantByIdQuery;
+import com.plantsync.platform.plantprofiles.domain.model.valueobjects.ProfileId;
 import com.plantsync.platform.plantprofiles.interfaces.rest.resources.PlantResource;
 import com.plantsync.platform.plantprofiles.domain.services.PlantQueryService;
 import com.plantsync.platform.plantprofiles.interfaces.rest.assemblers.PlantResourceFromEntityAssembler;
@@ -55,7 +56,7 @@ public class PlantQueryController {
             @ApiResponse(responseCode = "404", description = "No plants found for the user")
     })
     public ResponseEntity<List<PlantResource>> getAllPlantsByProfileId(@RequestParam Long profileId) {
-        var plants = plantQueryService.handle(new GetAllPlantsByProfileIdQuery(profileId));
+        var plants = plantQueryService.handle(new GetAllPlantsByProfileIdQuery(new ProfileId(profileId)));
 
         if (plants.isEmpty()) return ResponseEntity.notFound().build();
 
