@@ -1,5 +1,5 @@
 
-package com.plantsync.platform.shared.infrastructure.flyway;
+package com.plantsync.platform.shared.infrastructure.persistence.flyway;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
