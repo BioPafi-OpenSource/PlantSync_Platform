@@ -53,8 +53,8 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * This method generates a JWT token from a username
-     * @param username the username
+     * This method generates a JWT token from a email
+     * @param username the email
      * @return String the JWT token
      */
     public String generateToken(String username) {
@@ -62,9 +62,9 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * This method generates a JWT token from a username and a secret.
+     * This method generates a JWT token from a email and a secret.
      * It uses the default expiration days from the application.properties file.
-     * @param username the username
+     * @param username the email
      * @return String the JWT token
      */
     private String buildTokenWithDefaultParameters(String username) {
@@ -80,9 +80,9 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * This method extracts the username from a JWT token
+     * This method extracts the email from a JWT token
      * @param token the token
-     * @return String the username
+     * @return String the email
      */
     @Override
     public String getEmailFromToken(String token) {

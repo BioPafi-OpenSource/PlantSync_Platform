@@ -1,4 +1,4 @@
-package com.plantsync.platform.tasks.domain.model.services;
+package com.plantsync.platform.tasks.domain.services;
 
 
 

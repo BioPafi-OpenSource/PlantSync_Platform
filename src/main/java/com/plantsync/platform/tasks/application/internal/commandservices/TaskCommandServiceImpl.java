@@ -5,7 +5,7 @@ package com.plantsync.platform.tasks.application.internal.commandservices;
 import com.plantsync.platform.tasks.domain.model.aggregates.Task;
 import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
 import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;
-import com.plantsync.platform.tasks.domain.model.services.TaskCommandService;
+import com.plantsync.platform.tasks.domain.services.TaskCommandService;
 import com.plantsync.platform.tasks.infrastructure.persistence.jpa.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 

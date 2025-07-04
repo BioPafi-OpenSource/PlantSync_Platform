@@ -1,4 +1,4 @@
-package com.plantsync.platform.tasks.domain.model.services;
+package com.plantsync.platform.tasks.domain.services;
 
 import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
 import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;

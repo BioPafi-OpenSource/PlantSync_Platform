@@ -42,8 +42,8 @@ public class UserCommandServiceImpl implements UserCommandService {
      * <p>
      *     This method handles the {@link SignInCommand} command and returns the user and the token.
      * </p>
-     * @param command the sign-in command containing the username and password
-     * @return and optional containing the user matching the username and the generated token
+     * @param command the sign-in command containing the email and password
+     * @return and optional containing the user matching the email and the generated token
      * @throws RuntimeException if the user is not found or the password is invalid
      */
     @Override
@@ -62,7 +62,7 @@ public class UserCommandServiceImpl implements UserCommandService {
      * <p>
      *     This method handles the {@link SignUpCommand} command and returns the user.
      * </p>
-     * @param command the sign-up command containing the username and password
+     * @param command the sign-up command containing the email and password
      * @return the created user
      */
     @Override

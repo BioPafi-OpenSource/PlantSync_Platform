@@ -30,7 +30,7 @@ public class UserDetailsImpl implements UserDetails {
 
     /**
      * This constructor initializes the UserDetailsImpl object.
-     * @param email The username.
+     * @param email The email.
      * @param password The password.
      * @param authorities The authorities.
      */

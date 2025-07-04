@@ -3,8 +3,8 @@ package com.plantsync.platform.tasks.interfaces.rest;
 
 import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;
 import com.plantsync.platform.tasks.domain.model.queries.GetTaskByIdQuery;
-import com.plantsync.platform.tasks.domain.model.services.TaskCommandService;
-import com.plantsync.platform.tasks.domain.model.services.TaskQueryService;
+import com.plantsync.platform.tasks.domain.services.TaskCommandService;
+import com.plantsync.platform.tasks.domain.services.TaskQueryService;
 import com.plantsync.platform.tasks.interfaces.rest.assemblers.CreateTaskCommandFromResourceAssembler;
 import com.plantsync.platform.tasks.interfaces.rest.assemblers.TaskResourceFromEntityAssembler;
 import com.plantsync.platform.tasks.interfaces.rest.resources.CreateTaskResource;
