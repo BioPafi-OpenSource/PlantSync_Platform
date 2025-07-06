@@ -9,10 +9,11 @@ import java.util.List;
  * <p>
  *     This class represents the command to sign up a user.
  * </p>
- * @param username the email of the user
+
  * @param password the password of the user
  * @param roles the roles of the user
  *
  */
-public record SignUpCommand(String username, String password, List<Role> roles) {
+public record SignUpCommand(String name, String password, List<Role> roles,
+                             String email, String subscriptionPLan) {
 }

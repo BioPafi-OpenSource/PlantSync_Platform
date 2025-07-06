@@ -9,6 +9,7 @@ import com.plantsync.platform.iam.domain.model.commands.SignUpCommand;
 import com.plantsync.platform.iam.domain.services.UserCommandService;
 import com.plantsync.platform.iam.infrastructure.persistence.jpa.respositories.RoleRepository;
 import com.plantsync.platform.iam.infrastructure.persistence.jpa.respositories.UserRepository;
+import com.plantsync.platform.profiles.interfaces.acl.ProfilesContextFacade;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,15 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final UserRepository userRepository;
     private final HashingService hashingService;
     private final TokenService tokenService;
-
+    private final ProfilesContextFacade profilesContextFacade;
     private final RoleRepository roleRepository;
 
-    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService, RoleRepository roleRepository) {
+    public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService, TokenService tokenService,ProfilesContextFacade profilesContextFacade, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.hashingService = hashingService;
         this.tokenService = tokenService;
         this.roleRepository = roleRepository;
+        this.profilesContextFacade = profilesContextFacade;
     }
 
     /**
@@ -67,11 +69,20 @@ public class UserCommandServiceImpl implements UserCommandService {
      */
     @Override
     public Optional<User> handle(SignUpCommand command) {
-        if (userRepository.existsByEmail(command.username()))
+        if (userRepository.existsByEmail(command.email()))
             throw new RuntimeException("Username already exists");
         var roles = command.roles().stream().map(role -> roleRepository.findByName(role.getName()).orElseThrow(() -> new RuntimeException("Role name not found"))).toList();
-        var user = new User(command.username(), hashingService.encode(command.password()), roles);
+        var user = new User(command.email(), hashingService.encode(command.password()), roles);
         userRepository.save(user);
-        return userRepository.findByEmail(command.username());
+
+        var createdUser = userRepository.findByEmail(command.email()).orElseThrow();
+
+        profilesContextFacade.createProfile(
+                command.name(),
+                createdUser.getId(),
+                command.subscriptionPLan()
+        );
+
+        return Optional.of(createdUser);
     }
 }
