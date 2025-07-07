@@ -1,6 +1,7 @@
 package com.plantsync.platform.billing.interfaces;
 
 import com.plantsync.platform.billing.application.internal.commandservices.CreatePaymentSessionCommandService;
+import com.stripe.exception.StripeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +11,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments")
-public class PaymentController {
+public class PaymentsController {
 
     private final CreatePaymentSessionCommandService commandService;
 
-    public PaymentController(CreatePaymentSessionCommandService commandService) {
+    public PaymentsController(CreatePaymentSessionCommandService commandService) {
         this.commandService = commandService;
     }
 

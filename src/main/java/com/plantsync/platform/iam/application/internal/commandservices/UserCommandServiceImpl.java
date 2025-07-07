@@ -3,6 +3,8 @@ package com.plantsync.platform.iam.application.internal.commandservices;
 
 import com.plantsync.platform.iam.application.internal.outboundservices.hashing.HashingService;
 import com.plantsync.platform.iam.application.internal.outboundservices.tokens.TokenService;
+import com.plantsync.platform.iam.domain.exceptions.RoleNotFoundException;
+import com.plantsync.platform.iam.domain.exceptions.UserAlreadyExistsException;
 import com.plantsync.platform.iam.domain.model.aggregates.User;
 import com.plantsync.platform.iam.domain.model.commands.SignInCommand;
 import com.plantsync.platform.iam.domain.model.commands.SignUpCommand;
@@ -70,8 +72,9 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Override
     public Optional<User> handle(SignUpCommand command) {
         if (userRepository.existsByEmail(command.email()))
-            throw new RuntimeException("Username already exists");
-        var roles = command.roles().stream().map(role -> roleRepository.findByName(role.getName()).orElseThrow(() -> new RuntimeException("Role name not found"))).toList();
+            throw new UserAlreadyExistsException(command.email());
+        var roles = command.roles().stream().map(role -> roleRepository.findByName(role.getName()).orElseThrow(() -> new RoleNotFoundException(role.getName())))
+                .toList();
         var user = new User(command.email(), hashingService.encode(command.password()), roles);
         userRepository.save(user);
 

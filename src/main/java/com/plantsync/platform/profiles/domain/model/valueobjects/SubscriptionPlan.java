@@ -6,15 +6,11 @@ public enum SubscriptionPlan {
     PRO;
 
     public static SubscriptionPlan fromString(String value) {
-        return switch (value.toLowerCase()) {
-            case "free" -> BASIC;
-
-            case "premium" -> PREMIUM;
-
-            case "pro" -> PRO;
-
-
-            default -> throw new IllegalArgumentException("Invalid subscription plan: " + value);
-        };
+        try {
+            return SubscriptionPlan.valueOf(value.toUpperCase()); // ← clave
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Invalid subscription plan: " + value);
+        }
     }
+
 }

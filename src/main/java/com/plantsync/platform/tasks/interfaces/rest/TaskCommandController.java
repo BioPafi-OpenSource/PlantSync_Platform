@@ -66,7 +66,7 @@ public class TaskCommandController {
     public ResponseEntity<?> deleteTask(@PathVariable Long taskId) {
         var deleteTaskCommand = new DeleteTaskCommand(taskId);
         taskCommandService.handle(deleteTaskCommand);
-        return ResponseEntity.ok("Task with id successfully deleted");
+        return ResponseEntity.noContent().build();
     }
 
 

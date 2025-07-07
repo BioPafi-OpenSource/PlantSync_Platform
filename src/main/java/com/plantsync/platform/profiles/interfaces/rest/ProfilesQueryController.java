@@ -3,6 +3,7 @@ package com.plantsync.platform.profiles.interfaces.rest;
 
 import com.plantsync.platform.profiles.domain.model.queries.GetAllProfilesQuery;
 import com.plantsync.platform.profiles.domain.model.queries.GetProfileByIdQuery;
+import com.plantsync.platform.profiles.domain.model.queries.GetProfileByUserIdQuery;
 import com.plantsync.platform.profiles.domain.services.ProfileQueryService;
 import com.plantsync.platform.profiles.interfaces.rest.resources.ProfileResource;
 import com.plantsync.platform.profiles.interfaces.rest.transform.ProfileResourceFromEntityAssembler;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -61,6 +59,23 @@ public class ProfilesQueryController {
                 .map(ProfileResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(profileResources);
+    }
+
+
+    @GetMapping("/by-user-id")
+    @Operation(summary = "Get profile by user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Profile found"),
+            @ApiResponse(responseCode = "404", description = "Profile not found")
+    })
+    public ResponseEntity<ProfileResource> getProfileByUserId(@RequestParam Long userId) {
+        var query = new GetProfileByUserIdQuery(userId);
+        var profile = profileQueryService.handle(query);
+
+        if (profile.isEmpty()) return ResponseEntity.notFound().build();
+
+        var profileResource = ProfileResourceFromEntityAssembler.toResourceFromEntity(profile.get());
+        return ResponseEntity.ok(profileResource);
     }
 
 

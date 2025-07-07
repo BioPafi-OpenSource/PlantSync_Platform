@@ -1,5 +1,9 @@
 package com.plantsync.platform.plantprofiles.application.internal.commandservices;
 
+import com.plantsync.platform.plantprofiles.domain.exceptions.PlantCreationException;
+import com.plantsync.platform.plantprofiles.domain.exceptions.PlantDeletionException;
+import com.plantsync.platform.plantprofiles.domain.exceptions.PlantNotFoundException;
+import com.plantsync.platform.plantprofiles.domain.exceptions.PlantUpdateException;
 import com.plantsync.platform.plantprofiles.domain.model.aggregates.Plant;
 import com.plantsync.platform.plantprofiles.domain.model.commands.CreatePlantCommand;
 import com.plantsync.platform.plantprofiles.domain.model.commands.DeletePlantCommand;
@@ -27,7 +31,7 @@ public class PlantCommandServiceImpl implements PlantCommandService {
         try {
             plantRepository.save(plant);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error saving plant: %s".formatted(e.getMessage()));
+            throw new PlantCreationException(e.getMessage());
         }
         return plant.getId();
 
@@ -38,12 +42,12 @@ public class PlantCommandServiceImpl implements PlantCommandService {
     @Override
     public void handle(DeletePlantCommand command) {
         if (!plantRepository.existsById(command.plantId())) {
-            throw new IllegalArgumentException("Plant with id %s not found".formatted(command.plantId()));
+            throw new PlantNotFoundException(command.plantId());
         }
         try {
             plantRepository.deleteById(command.plantId());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error while deleting plant: %s".formatted(e.getMessage()));
+            throw new PlantDeletionException(e.getMessage());
         }
     }
 
@@ -54,7 +58,7 @@ public class PlantCommandServiceImpl implements PlantCommandService {
     public Optional<Plant> handle(UpdatePlantCommand command) {
         var result = plantRepository.findById(command.plantId());
         if (result.isEmpty())
-            throw new IllegalArgumentException("Plant with id %s not found".formatted(command.plantId()));
+            throw new PlantNotFoundException(command.plantId());
 
         var plantToUpdate = result.get();
 
@@ -73,7 +77,7 @@ public class PlantCommandServiceImpl implements PlantCommandService {
             );
             return Optional.of(updatedPlant);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error while updating plant: %s".formatted(e.getMessage()));
+            throw new PlantUpdateException(e.getMessage());
         }
     }
 

@@ -1,5 +1,6 @@
 package com.plantsync.platform.plantguides.application.internal.commandservices;
 
+import com.plantsync.platform.plantguides.domain.exceptions.GuideCreationException;
 import com.plantsync.platform.plantguides.domain.model.aggregates.Guide;
 import com.plantsync.platform.plantguides.domain.model.commands.CreateGuideCommand;
 import com.plantsync.platform.plantguides.domain.services.GuideCommandService;
@@ -23,7 +24,7 @@ public GuideCommandServiceImpl(GuideRepository guideRepository) {
         try {
             guideRepository.save(guide);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error saving guide: %s".formatted(e.getMessage()));
+            throw new GuideCreationException(e.getMessage());
         }
         return guide.getId();
 

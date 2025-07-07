@@ -16,4 +16,5 @@ ALTER TABLE plant_histories
         FOREIGN KEY (plant_id)
             REFERENCES plants(id);
 
+ALTER TABLE plants MODIFY COLUMN image_url LONGTEXT;
 

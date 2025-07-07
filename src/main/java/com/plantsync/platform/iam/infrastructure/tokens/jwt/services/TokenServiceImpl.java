@@ -62,7 +62,7 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * This method generates a JWT token from a email and a secret.
+     * This method generates a JWT token from an email and a secret.
      * It uses the default expiration days from the application.properties file.
      * @param username the email
      * @return String the JWT token
