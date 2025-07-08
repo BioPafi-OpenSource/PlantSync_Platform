@@ -2,10 +2,12 @@ package com.plantsync.platform.tasks.application.internal.commandservices;
 
 
 
+import com.plantsync.platform.tasks.domain.exceptions.TaskCreationException;
+import com.plantsync.platform.tasks.domain.exceptions.TaskDeletionException;
 import com.plantsync.platform.tasks.domain.model.aggregates.Task;
 import com.plantsync.platform.tasks.domain.model.commands.CreateTaskCommand;
 import com.plantsync.platform.tasks.domain.model.commands.DeleteTaskCommand;
-import com.plantsync.platform.tasks.domain.model.services.TaskCommandService;
+import com.plantsync.platform.tasks.domain.services.TaskCommandService;
 import com.plantsync.platform.tasks.infrastructure.persistence.jpa.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class TaskCommandServiceImpl implements TaskCommandService {
         try {
             taskRepository.save(task);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error saving task: %s".formatted(e.getMessage()));
+            throw new TaskCreationException(e.getMessage());
         }
         return task.getId();
 
@@ -40,7 +42,7 @@ public class TaskCommandServiceImpl implements TaskCommandService {
         try {
             taskRepository.deleteById(command.taskId());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error while deleting task: %s".formatted(e.getMessage()));
+            throw new TaskDeletionException(e.getMessage());
         }
     }
 }

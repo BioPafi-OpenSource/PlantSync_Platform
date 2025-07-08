@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
+/**
+ * REST controller for handling HTTP requests related to Guide queries.
+ * Provides endpoints to retrieve all guides or a specific guide by its ID.
+ */
 @RestController
 @RequestMapping(value = "/api/v1/guides", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Guides", description = "Guide Endpoints")
@@ -46,6 +49,13 @@ public class GuideQueryController {
 
 
 
+
+    /**
+     * Retrieves a guide by its ID.
+     *
+     * @param guideId the ID of the guide to retrieve
+     * @return a {@link ResponseEntity} containing the {@link GuideResource} if found, or 404 if not
+     */
     @GetMapping("/{guideId}")
     @Operation(summary = "Get guide by id", description = "Get guide by id")
     @ApiResponses(value = {

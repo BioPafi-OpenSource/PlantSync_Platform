@@ -4,6 +4,6 @@ public record ProfileResource (
 
 Long id,
     String personName,
-    String subscriptionPLan,
-    Long UserId){
+    String subscriptionPlan,
+    Long userId){
 }
