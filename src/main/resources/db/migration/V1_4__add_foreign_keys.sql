@@ -16,5 +16,11 @@ ALTER TABLE plant_histories
         FOREIGN KEY (plant_id)
             REFERENCES plants(id);
 
+ALTER TABLE profiles
+    ADD CONSTRAINT FK_profiles_user_id
+        FOREIGN KEY (user_id)
+            REFERENCES users(id);
+
+
 ALTER TABLE plants MODIFY COLUMN image_url LONGTEXT;
 

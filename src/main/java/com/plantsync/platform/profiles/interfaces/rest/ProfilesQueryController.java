@@ -61,7 +61,12 @@ public class ProfilesQueryController {
         return ResponseEntity.ok(profileResources);
     }
 
-
+    /**
+     * Retrieves a profile by its unique identifier.
+     *
+     * @param userId the ID of the profile to retrieve
+     * @return the profile resource if found, otherwise 404 Not Found
+     */
     @GetMapping("/by-user-id")
     @Operation(summary = "Get profile by user ID")
     @ApiResponses(value = {
