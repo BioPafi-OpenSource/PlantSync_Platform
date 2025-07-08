@@ -49,13 +49,13 @@ public class PlantQueryController {
         return ResponseEntity.ok(resources);
     }
 
-    @GetMapping("/profileId")
+    @GetMapping("/by-profile/{profileId}")
     @Operation(summary = "Get plants by profile ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Plants found for the user"),
             @ApiResponse(responseCode = "404", description = "No plants found for the user")
     })
-    public ResponseEntity<List<PlantResource>> getAllPlantsByProfileId(@RequestParam Long profileId) {
+    public ResponseEntity<List<PlantResource>> getAllPlantsByProfileId(@PathVariable Long profileId) {
         var plants = plantQueryService.handle(new GetAllPlantsByProfileIdQuery(new ProfileId(profileId)));
 
         if (plants.isEmpty()) return ResponseEntity.notFound().build();
@@ -67,13 +67,13 @@ public class PlantQueryController {
         return ResponseEntity.ok(resources);
     }
 
-    @GetMapping("/plantId")
+    @GetMapping("/{plantId}")
     @Operation(summary = "Get plant by ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Plant found for the user"),
             @ApiResponse(responseCode = "404", description = "No plant found for the user")
     })
-    public ResponseEntity<PlantResource> getPlantByUserId( @RequestParam Long plantId) {
+    public ResponseEntity<PlantResource> getPlantById( @PathVariable Long plantId) {
 
         var getPlantByIdQuery = new GetPlantByIdQuery(plantId);
         var plant = plantQueryService.handle(getPlantByIdQuery);

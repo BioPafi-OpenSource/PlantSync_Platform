@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
+/**
+ * REST controller for handling HTTP requests related to  Guide creation.
+ * Provides an endpoint to create a new guide.
+ */
 @RestController
 @RequestMapping(value = "/api/v1/guides", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Guides", description = "Available Guide Endpoints")

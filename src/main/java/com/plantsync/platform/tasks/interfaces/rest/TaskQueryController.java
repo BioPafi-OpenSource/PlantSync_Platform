@@ -2,7 +2,7 @@ package com.plantsync.platform.tasks.interfaces.rest;
 
 
 import com.plantsync.platform.tasks.domain.model.queries.GetAllTasksQuery;
-import com.plantsync.platform.tasks.domain.model.services.TaskQueryService;
+import com.plantsync.platform.tasks.domain.services.TaskQueryService;
 import com.plantsync.platform.tasks.interfaces.rest.assemblers.TaskResourceFromEntityAssembler;
 import com.plantsync.platform.tasks.interfaces.rest.resources.TaskResource;
 import io.swagger.v3.oas.annotations.Operation;

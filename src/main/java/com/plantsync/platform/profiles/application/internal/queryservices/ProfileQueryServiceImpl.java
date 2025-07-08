@@ -3,6 +3,7 @@ package com.plantsync.platform.profiles.application.internal.queryservices;
 import com.plantsync.platform.profiles.domain.model.aggregates.Profile;
 import com.plantsync.platform.profiles.domain.model.queries.GetAllProfilesQuery;
 import com.plantsync.platform.profiles.domain.model.queries.GetProfileByIdQuery;
+import com.plantsync.platform.profiles.domain.model.queries.GetProfileByUserIdQuery;
 import com.plantsync.platform.profiles.domain.services.ProfileQueryService;
 import com.plantsync.platform.profiles.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,13 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     public List<Profile> handle(GetAllProfilesQuery query) {
         return profileRepository.findAll();
     }
+
+    @Override
+    public Optional<Profile> handle(GetProfileByUserIdQuery query) {
+        return profileRepository.findById(query.userId());
+    }
+
+
+
 }
 
