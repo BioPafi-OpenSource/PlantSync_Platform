@@ -51,7 +51,9 @@ public class Plant extends AuditableAbstractAggregateRoot<Plant> {
     /**
      * A Base64 or URL representing the image of the plant.
      */
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
     private String imageUrl;
+
 
     /**
      * Indicates whether notifications are enabled for this plant.

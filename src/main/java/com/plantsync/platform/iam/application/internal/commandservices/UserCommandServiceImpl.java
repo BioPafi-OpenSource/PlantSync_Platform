@@ -8,6 +8,7 @@ import com.plantsync.platform.iam.domain.exceptions.UserAlreadyExistsException;
 import com.plantsync.platform.iam.domain.model.aggregates.User;
 import com.plantsync.platform.iam.domain.model.commands.SignInCommand;
 import com.plantsync.platform.iam.domain.model.commands.SignUpCommand;
+import com.plantsync.platform.iam.domain.model.commands.UpdateUserCommand;
 import com.plantsync.platform.iam.domain.services.UserCommandService;
 import com.plantsync.platform.iam.infrastructure.persistence.jpa.respositories.RoleRepository;
 import com.plantsync.platform.iam.infrastructure.persistence.jpa.respositories.UserRepository;
@@ -83,9 +84,25 @@ public class UserCommandServiceImpl implements UserCommandService {
         profilesContextFacade.createProfile(
                 command.name(),
                 createdUser.getId(),
-                command.subscriptionPLan()
+                command.subscriptionPlan()
         );
 
         return Optional.of(createdUser);
+    }
+
+    @Override
+    public Optional<User> handle(UpdateUserCommand command) {
+        var optionalUser = userRepository.findById(command.id());
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("User with ID " + command.id() + " not found");
+        }
+
+        var user = optionalUser.get();
+
+        return Optional.of(userRepository.save(
+                user.updateInformation(command.email())
+        ));
+
+
     }
 }

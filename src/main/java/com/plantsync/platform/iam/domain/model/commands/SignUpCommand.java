@@ -15,5 +15,5 @@ import java.util.List;
  *
  */
 public record SignUpCommand(String name, String password, List<Role> roles,
-                             String email, String subscriptionPLan) {
+                             String email, String subscriptionPlan) {
 }

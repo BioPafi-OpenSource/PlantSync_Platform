@@ -2,6 +2,7 @@ package com.plantsync.platform.profiles.domain.model.aggregates;
 
 
 import com.plantsync.platform.profiles.domain.model.commands.CreateProfileCommand;
+import com.plantsync.platform.profiles.domain.model.commands.UpdateProfileCommand;
 import com.plantsync.platform.profiles.domain.model.valueobjects.PaymentStatus;
 import com.plantsync.platform.profiles.domain.model.valueobjects.PersonName;
 import com.plantsync.platform.profiles.domain.model.valueobjects.SubscriptionPlan;
@@ -10,6 +11,8 @@ import com.plantsync.platform.shared.domain.model.aggregates.AuditableAbstractAg
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Optional;
 
 /**
  * Aggregate root representing a user profile in the system.
@@ -78,4 +81,14 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.userId = userId;
         this.paymentStatus = paymentStatus;
     }
+
+    public Profile updateInformation(PersonName personName, SubscriptionPlan subscriptionPlan) {
+        this.personName = personName;
+        this.subscriptionPlan = subscriptionPlan;
+        return this;
+    }
+
+
+
+
 }

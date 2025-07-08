@@ -22,5 +22,3 @@ ALTER TABLE profiles
             REFERENCES users(id);
 
 
-ALTER TABLE plants MODIFY COLUMN image_url LONGTEXT;
-

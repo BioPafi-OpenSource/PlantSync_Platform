@@ -1,6 +1,7 @@
 package com.plantsync.platform.plantprofiles.interfaces.rest;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,10 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherQueryController {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String apiKey = "f2aae48671e29e04c682372baceebe65";
+
+
+    @Value("${openweather.api.key}")
+    private String apiKey;
 
     @GetMapping("/city")
     public ResponseEntity<?> getWeatherByCity(@RequestParam String city) {
